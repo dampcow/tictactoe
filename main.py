@@ -14,6 +14,10 @@ def main():
     display_board()
     
     while available_squares != []:
+        win_or_no = check_win(board)
+        if win_or_no:
+            print("Game over!")
+            exit()
         if x_or_o == "o":
             player_start()
         else:
@@ -76,8 +80,18 @@ def player_move():
 
     board[player_square - 1] = x_or_o
 
-def check_win():
-    pass
+def check_win(board):
+    winning_combinations = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],  # Rows
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],  # Columns
+        [0, 4, 8], [2, 4, 6]  # Diagonals
+    ]
+    
+    for combination in winning_combinations:
+        if board[combination[0]] == board[combination[1]] == board[combination[2]] and board[combination[0]] != ' ':
+            return True
+    
+    return False
 
 if __name__ == '__main__':
     main()
